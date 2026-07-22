@@ -50,7 +50,7 @@ def main():
 
     sender = Sender(peer_addr, send_size_bytes, runs)
 
-    sleep(SERVER_WAIT_TIME)  # wait for server
+    sleep(SERVER_WAIT_TIME)
     avg_elapsed = sender.start()
 
     print(f"avg_elapsed={avg_elapsed}")
