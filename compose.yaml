@@ -4,7 +4,7 @@ services:
     container_name: pumba
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    command: netem --duration 5m rate --rate 1mbit sender
+    command: netem --duration 5m rate --rate 10mbit sender
     depends_on:
       - sender
 
@@ -15,7 +15,7 @@ services:
     environment:
       - SERVER_ADDR=receiver:1234
       - MSG_SIZE_BYTES=1000000
-      - RUNS=100
+      - RUNS=1
     depends_on:
       - receiver
 
@@ -26,4 +26,4 @@ services:
     environment:
       - SERVER_ADDR=0.0.0.0:1234
       - MSG_SIZE_BYTES=1000000
-      - RUNS=100
+      - RUNS=1

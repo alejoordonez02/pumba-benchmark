@@ -2,7 +2,8 @@ import os
 import random
 import string
 from datetime import datetime
-from socket import AF_INET, SO_REUSEADDR, SOCK_STREAM, SOL_SOCKET, socket
+from socket import AF_INET, SOCK_STREAM, socket
+from time import sleep
 
 
 class Sender:
@@ -37,6 +38,7 @@ class Sender:
 
 
 DEFAULT_SERVER_ADDR = "localhost:1234"
+SERVER_WAIT_TIME = 3
 
 
 def main():
@@ -46,6 +48,8 @@ def main():
     runs = int(os.environ["RUNS"])
 
     sender = Sender(peer_addr, send_size_bytes, runs)
+
+    sleep(SERVER_WAIT_TIME)  # wait for server
     avg_elapsed = sender.start()
 
     print(f"avg_elapsed={avg_elapsed}")
