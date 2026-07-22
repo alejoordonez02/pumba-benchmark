@@ -1,7 +1,4 @@
-SERVER_PORT = 1234
-MSG_SIZE_BYTES = 1 * 10**6
-RUNS = 1
-BANDWIDTH_MBPS = 10
+from cfg import BANDWIDTH_MBYTESPS, MSG_SIZE_BYTES, RUNS, SERVER_PORT
 
 
 def gen_compose(server_port: int, msg_size_bytes: int, bandwidth_mbps: int, runs: int):
@@ -12,7 +9,7 @@ services:
     container_name: pumba
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    command: netem --duration 5m rate --rate {bandwidth_mbps}mbit sender
+    command: netem --duration 5m rate --rate {bandwidth_mbps}mbit 're2:.*sender.*|.*receiver.*'
     depends_on:
       - sender
 
@@ -39,7 +36,8 @@ services:
 
 
 def main():
-    compose = gen_compose(SERVER_PORT, MSG_SIZE_BYTES, BANDWIDTH_MBPS, RUNS)
+    bandwidth_mbps = BANDWIDTH_MBYTESPS * 8
+    compose = gen_compose(SERVER_PORT, MSG_SIZE_BYTES, bandwidth_mbps, RUNS)
     with open("compose.yaml", "w") as f:
         f.write(compose)
 

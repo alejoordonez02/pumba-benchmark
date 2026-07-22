@@ -25,7 +25,8 @@ class Sender:
 
         start = datetime.now()
         for _ in range(0, self._runs):
-            skt.send(msg)
+            skt.sendall(msg)
+        skt.recv(len(b"ACK"))
 
         end = datetime.now()
 
@@ -53,6 +54,8 @@ def main():
     avg_elapsed = sender.start()
 
     print(f"avg_elapsed={avg_elapsed}")
+
+    exit(0)
 
 
 if __name__ == "__main__":

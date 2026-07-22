@@ -24,6 +24,7 @@ class Receiver:
             recvd = 0
             while recvd < self._recv_size_bytes:
                 recvd += len(skt.recv(self._recv_size_bytes - recvd))
+        skt.sendall(b"ACK")
 
         end = datetime.now()
 
@@ -49,6 +50,8 @@ def main():
     avg_elapsed = receiver.start()
 
     print(f"avg_elapsed={avg_elapsed}")
+
+    exit(0)
 
 
 if __name__ == "__main__":
